@@ -2,6 +2,8 @@
 
 Planning and building a cultivation system.
 
+## High-Level Architechture Diagram
+
 ```mermaid
 
 ---
