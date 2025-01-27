@@ -1,4 +1,4 @@
-# The G2 Project
+# **The G2 Project**
 
 *Planning and building a cultivation system.*
 
