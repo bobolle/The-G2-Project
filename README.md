@@ -1,6 +1,6 @@
 # The G2 Project
 
-Planning and building a cultivation system.
+*Planning and building a cultivation system.*
 
 ## High-Level Architechture Diagram
 
