@@ -1,8 +1,10 @@
 # Max was here
 
-# **The G2 Project**
+# The G2 Project
 
 *Planning and building a cultivation system.*
+
+**This is a bold text line** 
 
 ## High-Level Architechture Diagram
 
