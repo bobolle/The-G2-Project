@@ -23,7 +23,7 @@ flowchart LR
   end
  subgraph subGraph1[" "]
         F["Moisture Sensor"]
-        E1{"Plant System"}
+        E1{"Plant Device"}
         G["Temperature Sensor"]
         H["Light Sensor"]
         I["Auto-Shading"]
