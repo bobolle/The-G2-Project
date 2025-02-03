@@ -92,36 +92,11 @@ These parameters must be provided when running `cmake`.
 Example:
 
 ```sh
-cmake .. -DWIFI_SSID="MyNetwork" -DWIFI_PASS="MyPassword" -DSERVER_IP="192.168.1.100" -DSERVER_PORT=8080
+cmake -DWIFI_SSID="MyNetwork" -DWIFI_PASS="MyPassword" -DSERVER_IP="192.168.1.100" -DSERVER_PORT=8080 ..
 ```
 
 ## Circuit diagram for Raspberry Pico W:
-```mermaid
----
-config:
-  layout: fixed
----
-flowchart TD
-    n7["10k Ohm resistor"] --> n2(("Photoresistor")) & n12["Filled Circle"]
-    n9["Filled Circle"] --> n8["Filled Circle"]
-    n11["Filled Circle"] --> n2
-    n4["3v3"]
-    n3["GPIO26"]
-    n1["Raspberry Pico W"]
-    n5["GROUND"]
-    n6["USB"]
-    n7@{ shape: proc}
-    n12@{ shape: f-circ}
-    n9@{ shape: f-circ}
-    n8@{ shape: f-circ}
-    n11@{ shape: f-circ}
-    n4@{ shape: text}
-    n3@{ shape: text}
-    n1@{ shape: rounded}
-    n5@{ shape: text}
-    n6@{ shape: text}
-
-````
+TBA
 
 ## How It Works
 
