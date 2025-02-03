@@ -1,6 +1,10 @@
-# **The G2 Project**
+# Max was here
+
+# The G2 Project
 
 *Planning and building a cultivation system.*
+
+**This is a bold text line** 
 
 ## High-Level Architechture Diagram
 
@@ -19,7 +23,7 @@ flowchart LR
   end
  subgraph subGraph1[" "]
         F["Moisture Sensor"]
-        E1{"Plant System"}
+        E1{"Plant Device"}
         G["Temperature Sensor"]
         H["Light Sensor"]
         I["Auto-Shading"]
