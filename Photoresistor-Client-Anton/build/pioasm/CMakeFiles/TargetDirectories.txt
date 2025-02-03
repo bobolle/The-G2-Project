@@ -1,7 +1,0 @@
-/home/anton/ws/projectg2/photoresistor/build/pioasm/CMakeFiles/pioasm.dir
-/home/anton/ws/projectg2/photoresistor/build/pioasm/CMakeFiles/edit_cache.dir
-/home/anton/ws/projectg2/photoresistor/build/pioasm/CMakeFiles/rebuild_cache.dir
-/home/anton/ws/projectg2/photoresistor/build/pioasm/CMakeFiles/list_install_components.dir
-/home/anton/ws/projectg2/photoresistor/build/pioasm/CMakeFiles/install.dir
-/home/anton/ws/projectg2/photoresistor/build/pioasm/CMakeFiles/install/local.dir
-/home/anton/ws/projectg2/photoresistor/build/pioasm/CMakeFiles/install/strip.dir

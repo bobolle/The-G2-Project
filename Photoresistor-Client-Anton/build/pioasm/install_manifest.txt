@@ -1,5 +1,0 @@
-/home/anton/ws/projectg2/photoresistor/build/pioasm-install/pioasm/pioasm
-/home/anton/ws/projectg2/photoresistor/build/pioasm-install/pioasm/pioasmTargets.cmake
-/home/anton/ws/projectg2/photoresistor/build/pioasm-install/pioasm/pioasmTargets-release.cmake
-/home/anton/ws/projectg2/photoresistor/build/pioasm-install/pioasm/pioasmConfig.cmake
-/home/anton/ws/projectg2/photoresistor/build/pioasm-install/pioasm/pioasmConfigVersion.cmake
