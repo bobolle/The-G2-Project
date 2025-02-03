@@ -155,6 +155,7 @@ int main() {
   tcp_client_connect();
 
   while (1) {
+    // Keep program alive and use lwIP-poll to send data
     sleep_ms(5000);
   }
 
