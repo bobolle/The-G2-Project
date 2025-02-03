@@ -96,7 +96,7 @@ cmake -DWIFI_SSID="MyNetwork" -DWIFI_PASS="MyPassword" -DSERVER_IP="192.168.1.10
 ```
 
 ## Circuit diagram for Raspberry Pico W:
-TBA
+![Photoresistor Circuit](path-to-image/photoresistor.png)
 
 ## How It Works
 
