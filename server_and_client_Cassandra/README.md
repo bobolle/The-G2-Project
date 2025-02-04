@@ -6,7 +6,7 @@ This project consists of a React frontend and an Express backend. The frontend i
 
 ### Client
 
-The client folder contains the React frontend.
+The client folder contains the React frontend. Relevant files are App.js in /client/src and server.js in /server.
 
 #### Available Scripts
 
