@@ -1,5 +1,6 @@
 #include <arpa/inet.h>
 #include <errno.h>
+#include <getopt.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,7 +8,7 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-#define PORT 1337
+#define DEFAULT_PORT 1337
 #define BUFFER_SIZE 1024
 
 int server_fd = -1;
@@ -26,13 +27,34 @@ void handle_signint(int sig) {
   exit(0);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
   signal(SIGINT, handle_signint);
+
+  // Read flags for port or use standard
+  int opt;
+  int port = DEFAULT_PORT;
+
+  while ((opt = getopt(argc, argv, "p:")) != -1) {
+    switch (opt) {
+      case 'p':
+        if (optarg) {
+          port = atoi(optarg);
+          if (port <= 0) {
+            fprintf(stderr, "Invalid port number.\n");
+            return EXIT_FAILURE;
+          }
+        }
+        break;
+      default:
+        fprintf(stderr, "Usage: %s [-p port].\n", argv[0]);
+        return EXIT_FAILURE;
+    }
+  }
 
   struct sockaddr_in address = {
       .sin_family = AF_INET,  // IPv4
       .sin_addr.s_addr = INADDR_ANY,
-      .sin_port = htons(PORT)  // Convert to network byte order
+      .sin_port = htons(port)  // Convert to network byte order
   };
 
   // Create socket file descriptor
@@ -42,7 +64,7 @@ int main() {
     exit(EXIT_FAILURE);
   }
 
-  int opt = 1;
+  opt = 1;
   setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
   // Bind the socket to the specified port
@@ -59,7 +81,7 @@ int main() {
     exit(EXIT_FAILURE);
   }
 
-  printf("Server is listening on port %d\n", PORT);
+  printf("Server is listening on port %d\n", port);
 
   char buffer[BUFFER_SIZE] = {0};
 
@@ -114,7 +136,7 @@ int main() {
 
       // Send response
       const char *response = "Message received!\n";
-      if (send(client_socket, response, strlen(response), 0) < 0){
+      if (send(client_socket, response, strlen(response), 0) < 0) {
         perror("Error while sending reply.\n");
       }
     }
