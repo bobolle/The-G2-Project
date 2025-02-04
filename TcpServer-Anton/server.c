@@ -15,7 +15,7 @@ int server_fd = -1;
 int client_socket = -1;
 
 void handle_signint(int sig) {
-  printf("Closing server..\n");
+  printf("\nClosing server..\n");
   if (client_socket != -1) {
     close(client_socket);
     printf("Client socket closed.\n");
