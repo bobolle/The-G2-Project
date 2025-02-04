@@ -25,7 +25,7 @@ graph TD
     A -->|GET /api/devices/:deviceId/data| B
 
     B -->|Database Operations| C
-´´´
+```
 
 ## Project Structure
 
