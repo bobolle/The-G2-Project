@@ -64,8 +64,7 @@ In the `server` directory, you can run:
 - `GET /api/devices/:deviceId/data`: Fetches the latest data for a specific device.
 
 #### Python example
-
-Python
+```Python
 
 import requests
 import json
@@ -86,6 +85,7 @@ try:
     print("Data sent successfully:", response.json())
 except requests.exceptions.RequestException as e:
     print("Error sending data:", e)
+```
 
 #### Environment Variables
 
