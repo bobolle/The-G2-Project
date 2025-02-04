@@ -16,10 +16,8 @@ graph TD
     subgraph External
         E[Raspberry Pi]
     end
-    E -->|GET /api/devices/:deviceId/data| B
 
-
-    A -->|POST /api/data| B
+    E -->|POST /api/data| B
     A -->|GET /api/items| B
     A -->|GET /api/devices| B
     A -->|GET /api/devices/:deviceId/data| B
