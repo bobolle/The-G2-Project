@@ -40,7 +40,7 @@ This project demonstrates the use of FreeRTOS on the Raspberry Pi Pico W by impl
 4. **Configure the Project with CMake**:
    - Run the following command to configure the project:
      ```bash
-     cmake -DPICO_BOARD=pico_w ..
+     cmake ..
      ```
 
 5. **Build the Project**:

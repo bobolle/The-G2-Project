@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.13)
-set(PICO_BOARD pico_w)
 set(FREERTOS_CONFIG_FILE_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
 
-# Pull in SDK (must be before project)
+# Pull in SDK 
+set(PICO_BOARD pico_w)
 include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 
 # Pull in FreeRTOS
