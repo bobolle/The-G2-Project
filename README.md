@@ -10,7 +10,6 @@
 
 ---
 config:
-  theme: forest
   layout: fixed
 ---
 flowchart LR
