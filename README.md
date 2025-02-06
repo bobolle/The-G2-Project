@@ -58,3 +58,6 @@ flowchart LR
     Y6 --> Y7 & Y8
     style D stroke:#333,stroke-width:4px
 ```
+
+## Network Topology
+![image](https://github.com/user-attachments/assets/17baee00-ec64-478c-a127-39611861b1a1)
