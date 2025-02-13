@@ -18,7 +18,7 @@
 #endif
 
 #ifndef MQTT_BROKER_IP
-#define MQTT_BROKER_IP "192.168.1.120"
+#define MQTT_BROKER_IP "localhost"
 #endif
 
 #ifndef MQTT_BROKER_PORT
@@ -128,7 +128,7 @@ void mqtt_task(void *pvParameters) {
       char msg[50];
       snprintf(msg, sizeof(msg), "Light level: %u Moist level: %u\n", latest_light,
                latest_moist);
-      printf("Publishing: %s\n", msg);
+      printf("Publishing to %s:%d: %s\n", MQTT_BROKER_IP, MQTT_BROKER_PORT, msg);
 
       err = mqtt_publish(mqtt_client, MQTT_TOPIC, (const u8_t *)msg,
                          strlen(msg), 0, 0, mqtt_pub_request_cb, NULL);
