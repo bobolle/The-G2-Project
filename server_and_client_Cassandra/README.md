@@ -2,6 +2,29 @@
 
 This project consists of a React frontend and an Express backend. The frontend is built using Create React App, and the backend uses Firebase Admin SDK for database operations.
 
+```mermaid
+graph TD
+    subgraph Client
+        A[React Frontend]
+    end
+
+    subgraph Server
+        B[Express Backend]
+        C[Firebase Database]
+    end
+
+    subgraph External
+        E[Raspberry Pi]
+    end
+
+    E -->|POST /api/data| B
+    A -->|GET /api/items| B
+    A -->|GET /api/devices| B
+    A -->|GET /api/devices/:deviceId/data| B
+
+    B -->|Database Operations| C
+```
+
 ## Project Structure
 
 ### Client
@@ -37,6 +60,30 @@ In the `server` directory, you can run:
 - `GET /api/items`: Fetches all items from the database.
 - `GET /api/devices`: Fetches all devices from the database.
 - `GET /api/devices/:deviceId/data`: Fetches the latest data for a specific device.
+
+#### Python example
+```Python
+
+import requests
+import json
+
+device_id = "plant1"  # Replace with your device ID
+api_url = "http://localhost:5000/api/devices/" + device_id + "/data"  # Or your deployed URL
+
+# Sample sensor data (replace with your actual sensor readings)
+sensor_data = {
+    "temperature": 25.5,
+    "humidity": 60,
+    "moisture": 40
+}
+
+try:
+    response = requests.post(api_url, json=sensor_data)
+    response.raise_for_status()  # Raise an exception for bad status codes (4xx or 5xx)
+    print("Data sent successfully:", response.json())
+except requests.exceptions.RequestException as e:
+    print("Error sending data:", e)
+```
 
 #### Environment Variables
 

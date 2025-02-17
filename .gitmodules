@@ -1,0 +1,6 @@
+[submodule "pico-ultrasonic-lib"]
+	path = pico-ultrasonic-lib
+	url = git@github.com:bobolle/pico-ultrasonic-lib.git
+[submodule "pico-client-dump"]
+	path = pico-client-dump
+	url = git@github.com:bobolle/pico-client-dump.git
