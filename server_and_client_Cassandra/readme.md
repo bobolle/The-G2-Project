@@ -10,7 +10,7 @@ graph TD
 
     subgraph Server
         B[Express Backend]
-        C[Firebase Database]
+        C[Postgresql Database]
     end
 
     subgraph External
