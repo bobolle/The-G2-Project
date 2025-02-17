@@ -1,9 +1,9 @@
 # The G2 Project
 
-- DB: PostgresDB
-- Protocol communication:
+- DB: PostgreSQL DB
+- Protocol communication: TCP/IP
 - Avg. calculations done on hub.
-- Log handling, store on diviation?
+- Log handling, store in database, PostgreSQL
 
 ## High-Level Architechture Diagram
 
