@@ -1,3 +1,5 @@
+Rough structure
+
 graph TD
     subgraph Client
         A[React Frontend]
