@@ -64,6 +64,8 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
     WIFI_PASS="${WIFI_PASS}"
     MQTT_BROKER_IP="${SERVER_IP}"
     MQTT_BROKER_PORT=${SERVER_PORT}
+    MQTT_USER="${MQTT_USER}"
+    MQTT_PASSWORD="${MQTT_PASSWORD}"
 )
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE ${PICO_SDK_PATH}/lib/lwip/src/apps/mqtt/mqtt.c)
 

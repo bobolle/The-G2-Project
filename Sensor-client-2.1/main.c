@@ -29,6 +29,14 @@
 #define MQTT_TOPIC "sensors/edgedevice"
 #endif
 
+#ifndef MQTT_PASSWORD
+#define MQTT_PASSWORD "default_password"
+#endif
+
+#ifndef MQTT_USER
+#define MQTT_USER "default_user"
+#endif
+
 // Mqtt-client object
 static mqtt_client_t *mqtt_client;
 volatile bool wifi_connected = false;
@@ -65,6 +73,8 @@ static void mqtt_pub_request_cb(void *arg, err_t result) {
     printf("MQTT: Publication succeeded.\n");
   }
 }
+
+// Wifi-connection
 void maintain_wifi(void *pvParameters) {
   while (1) {
     if (!wifi_connected) {
@@ -83,20 +93,23 @@ void maintain_wifi(void *pvParameters) {
   }
 }
 
-void sensor_task(void *pvParameters){
-  while(1) {
+// Read both sensors
+void sensor_task(void *pvParameters) {
+  while (1) {
     latest_light = read_photoresistor();
     latest_moist = read_moisture();
-    printf("Sensor readings - Light: %u, Moisture: %u\n", latest_light, latest_moist);
+    printf("Sensor readings - Light: %u, Moisture: %u\n", latest_light,
+           latest_moist);
     vTaskDelay(pdMS_TO_TICKS(5000));
   }
 }
 
+// Mqtt-task
 void mqtt_task(void *pvParameters) {
   mqtt_client = mqtt_client_new();
   struct mqtt_connect_client_info_t client_info = {.client_id = "pico",
-                                                   .client_user = NULL,
-                                                   .client_pass = NULL,
+                                                   .client_user = MQTT_USER,
+                                                   .client_pass = MQTT_PASSWORD,
                                                    .keep_alive = 60,
                                                    .will_topic = NULL,
                                                    .will_msg = NULL,
@@ -125,10 +138,13 @@ void mqtt_task(void *pvParameters) {
     }
 
     while (wifi_connected) {
-      char msg[50];
-      snprintf(msg, sizeof(msg), "Light level: %u Moist level: %u\n", latest_light,
-               latest_moist);
-      printf("Publishing to %s:%d: %s\n", MQTT_BROKER_IP, MQTT_BROKER_PORT, msg);
+      char msg[100];
+      snprintf(msg, sizeof(msg),
+               "{\"device_id\": \"Pico01\", \"lightlevel\": %u, \"moisture\": "
+               "%u, \"error_code\": 0}",
+               latest_light, latest_moist);
+      printf("Publishing to %s:%d: %s\n", MQTT_BROKER_IP, MQTT_BROKER_PORT,
+             msg);
 
       err = mqtt_publish(mqtt_client, MQTT_TOPIC, (const u8_t *)msg,
                          strlen(msg), 0, 0, mqtt_pub_request_cb, NULL);
@@ -139,7 +155,6 @@ void mqtt_task(void *pvParameters) {
     }
   }
 }
-
 
 int main() {
   stdio_init_all();
