@@ -27,15 +27,33 @@ def configure_routes(app):
     
     @app.route('/api/devices/<deviceId>/data', methods=['GET'])
     def get_device_data(deviceId):
-        data = DeviceData.query.filter_by(device_id=deviceId).all()  # Changed from deviceId
-        return jsonify([{'id': d.id, 'deviceId': d.device_id, 'value': d.value} for d in data])
-    
+        data = DeviceData.query.filter_by(device_id=deviceId).all()
+        return jsonify([{
+            'id': d.id,
+            'deviceId': d.device_id,
+            'timestamp': d.timestamp.isoformat(),
+            'lightLevel': d.light_level,
+            'moistureLevel': d.moisture_level
+        } for d in data])
+
     @app.route('/api/data', methods=['POST'])
     def post_data():
         data = request.get_json()
-        device_id = data.get('deviceId')
-        device_name = data.get('deviceName', f'Device {device_id}')  # Optional device name
         
+        # Extract required fields
+        device_id = data.get('deviceId')
+        timestamp = data.get('timestamp')
+        light_level = data.get('lightLevel')
+        moisture_level = data.get('moistureLevel')
+        device_name = data.get('deviceName', f'Device {device_id}')
+
+        # Validate required fields
+        if not all([device_id, timestamp, light_level, moisture_level]):
+            return jsonify({
+                'error': 'Missing required fields',
+                'required': ['deviceId', 'timestamp', 'lightLevel', 'moistureLevel']
+            }), 400
+
         # Check if device exists, if not create it
         device = Device.query.get(device_id)
         if not device:
@@ -52,10 +70,12 @@ def configure_routes(app):
 
         # Create new device data
         new_data = DeviceData(
-            device_id=device_id, 
-            value=data.get('value')
+            device_id=device_id,
+            timestamp=timestamp,
+            light_level=light_level,
+            moisture_level=moisture_level
         )
-        
+
         try:
             db.session.add(new_data)
             db.session.commit()
@@ -67,8 +87,10 @@ def configure_routes(app):
                 },
                 'data': {
                     'id': new_data.id,
+                    'timestamp': new_data.timestamp.isoformat(),
                     'deviceId': new_data.device_id,
-                    'value': new_data.value
+                    'lightLevel': new_data.light_level,
+                    'moistureLevel': new_data.moisture_level
                 }
             }), 201
         except Exception as e:
