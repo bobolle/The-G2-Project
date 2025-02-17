@@ -17,9 +17,9 @@ graph TD
         E[Raspberry Pi]
     end
 
-    E -->|POST /api/data| B
-    A <--|GET /api/devices| B
-    A <--|GET /api/devices/:deviceId/data| B
+    E-->|POST /api/data|B
+    A<--|GET /api/devices|B
+    A<--|GET /api/devices/:deviceId/data|B
 
-    B <-->|Database Operations| C
+    B<-->|Database Operations|C
 ```
