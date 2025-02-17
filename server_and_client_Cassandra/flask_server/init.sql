@@ -5,12 +5,14 @@ CREATE TABLE IF NOT EXISTS item (
 );
 
 CREATE TABLE IF NOT EXISTS device (
-    id SERIAL PRIMARY KEY,
+    id VARCHAR(80) PRIMARY KEY,  -- Changed from SERIAL to VARCHAR
     name VARCHAR(80) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS device_data (
     id SERIAL PRIMARY KEY,
-    device_id INTEGER REFERENCES device(id),
-    value INTEGER
+    device_id VARCHAR(80) REFERENCES device(id),
+    timestamp TIMESTAMP NOT NULL,
+    light_level FLOAT NOT NULL,
+    moisture_level FLOAT NOT NULL
 );

@@ -5,9 +5,11 @@ from models import db
 import os
 from seed import seed_data
 from time import sleep
+from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
     app.config['SQLAlCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
