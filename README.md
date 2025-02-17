@@ -1,8 +1,9 @@
 # The G2 Project
 
-*Planning and building a cultivation system.*
-
-**This is a bold text line** 
+- DB: PostgresDB
+- Protocol communication:
+- Avg. calculations done on hub.
+- Log handling, store on diviation?
 
 ## High-Level Architechture Diagram
 
