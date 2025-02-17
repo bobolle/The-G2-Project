@@ -1,6 +1,6 @@
 Rough structure
 
-'''graph TD
+```graph TD
     subgraph Client
         A[React Frontend]
     end
@@ -19,3 +19,4 @@ Rough structure
     A -->|GET /api/devices/:deviceId/data| B
 
     B -->|Database Operations| C
+```
