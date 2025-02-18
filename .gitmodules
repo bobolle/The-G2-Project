@@ -4,3 +4,6 @@
 [submodule "pico-client-dump"]
 	path = pico-client-dump
 	url = git@github.com:bobolle/pico-client-dump.git
+[submodule "iot-hub"]
+	path = iot-hub
+	url = git@github.com:bobolle/iot-hub.git
