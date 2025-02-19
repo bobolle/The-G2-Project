@@ -44,7 +44,7 @@ add_executable(${CMAKE_PROJECT_NAME} main.c)
 
 # USB and UART support
 pico_enable_stdio_usb(${CMAKE_PROJECT_NAME} 1)
-pico_enable_stdio_uart(${CMAKE_PROJECT_NAME} 0)
+pico_enable_stdio_uart(${CMAKE_PROJECT_NAME} 1)
 
 # Link libs
 target_link_libraries(${CMAKE_PROJECT_NAME}
@@ -56,6 +56,9 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 )
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/lwip
+    ${PICO_CYW43_INCLUDEDIR}
+    ${PICO_SDK_PATH}/lib/lwip/src/include
+    ${PICO_SDK_PATH}/src/bootrom 
 )
 # Flags to compilator
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
