@@ -61,63 +61,12 @@ volatile error_code_t current_error = ERROR_NONE;
 __attribute__((section(".uninitialized_data"))) volatile bool system_rebooted;
 __attribute__((section(".uninitialized_data"))) volatile char last_log[100];
 SemaphoreHandle_t sensor_mutex;
-
-void log_message(const char *format, ...) {
-  va_list args;
-  va_start(args, format);
-  vsnprintf((char *)last_log, sizeof(last_log), format, args);
-  va_end(args);
-  printf("%s\n", last_log);
-}
+volatile uint16_t latest_light = 0;
+volatile uint16_t latest_moist = 0;
+volatile bool wifi_connected = false;
 
 // Mqtt-client object
 static mqtt_client_t *mqtt_client;
-volatile bool wifi_connected = false;
-
-// Global variables for sensors
-volatile uint16_t latest_light = 0;
-volatile uint16_t latest_moist = 0;
-
-uint16_t read_photoresistor() {
-  adc_select_input(0);
-  uint16_t value = adc_read();
-  printf("Photoresistor value: %u\n", value);
-  return value;
-}
-
-uint16_t read_moisture() {
-  adc_select_input(1);
-  uint16_t value = adc_read();
-  printf("Moisture sensor value: %u\n", value);
-  return value;
-}
-
-// Callback for MQTT connection
-static void mqtt_connection_cb(mqtt_client_t *client, void *arg,
-                               mqtt_connection_status_t status) {
-  if (status == MQTT_CONNECT_ACCEPTED) {
-    printf("MQTT: Connected to broker!\n");
-  } else {
-    printf("MQTT: Connection failed, status: %d\n", status);
-  }
-}
-
-// Callback for MQTT publish request
-static void mqtt_pub_request_cb(void *arg, err_t result) {
-  if (result != ERR_OK) {
-    printf("MQTT: Publication failed: %d\n", result);
-  } else {
-    printf("MQTT: Publication succeeded.\n");
-  }
-}
-
-// DEBUG
-void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName) {
-  printf("Stack overflow detected in task: %s\n", pcTaskName);
-  stdio_flush();
-  vTaskDelay(pdMS_TO_TICKS(500));
-  watchdog_reboot(0, 0, 0);
-}
 
 // CRASH FUNCTIONS!!!! :@@@
 // ################################################################
@@ -184,6 +133,56 @@ void block_network_a_while() {
   printf("Wifi back online now.\n");
 }
 // ###############################################################
+
+// Save logs after restart 
+void log_message(const char *format, ...) {
+  va_list args;
+  va_start(args, format);
+  vsnprintf((char *)last_log, sizeof(last_log), format, args);
+  va_end(args);
+  printf("%s\n", last_log);
+}
+
+uint16_t read_photoresistor() {
+  adc_select_input(0);
+  uint16_t value = adc_read();
+  printf("Photoresistor value: %u\n", value);
+  return value;
+}
+
+uint16_t read_moisture() {
+  adc_select_input(1);
+  uint16_t value = adc_read();
+  printf("Moisture sensor value: %u\n", value);
+  return value;
+}
+
+// Callback for MQTT connection
+static void mqtt_connection_cb(mqtt_client_t *client, void *arg,
+                               mqtt_connection_status_t status) {
+  if (status == MQTT_CONNECT_ACCEPTED) {
+    printf("MQTT: Connected to broker!\n");
+  } else {
+    printf("MQTT: Connection failed, status: %d\n", status);
+  }
+}
+
+// Callback for MQTT publish request
+static void mqtt_pub_request_cb(void *arg, err_t result) {
+  if (result != ERR_OK) {
+    printf("MQTT: Publication failed: %d\n", result);
+  } else {
+    printf("MQTT: Publication succeeded.\n");
+  }
+}
+
+// DEBUG
+void vApplicationStackOverflowHook(TaskHandle_t xTask, char *pcTaskName) {
+  printf("Stack overflow detected in task: %s\n", pcTaskName);
+  stdio_flush();
+  vTaskDelay(pdMS_TO_TICKS(500));
+  watchdog_reboot(0, 0, 0);
+}
 
 // Wi-Fi connection task
 void maintain_wifi(void *pvParameters) {
@@ -264,7 +263,6 @@ void mqtt_task(void *pvParameters) {
       printf("Failed to start MQTT-connection: %d, retrying in 5s...\n", err);
       current_error = ERROR_MQTT_DISCONNECTED;
       vTaskDelay(pdMS_TO_TICKS(RETRY));
-      break;
 
       if (mqtt_client != NULL) {
         mqtt_disconnect(mqtt_client);
@@ -287,7 +285,7 @@ void mqtt_task(void *pvParameters) {
       }
       mqtt_attempts = 0;
       vTaskDelay(pdMS_TO_TICKS(RETRY));
-      continue;
+      continue;;
     }
 
     while (wifi_connected) {
@@ -316,7 +314,7 @@ void mqtt_task(void *pvParameters) {
         printf("Failed to publish MQTT-message: %d\n", err);
         current_error = ERROR_MQTT_PUBLISH;
         vTaskDelay(pdMS_TO_TICKS(RETRY));
-        break;
+        continue;
       }
       vTaskDelay(pdMS_TO_TICKS(SEND));
     }
@@ -382,7 +380,7 @@ int main() {
   xTaskCreate(maintain_wifi, "WiFi Task", 1024, NULL, 2, NULL);
   xTaskCreate(watchdog_task, "Watchdog Task", 512, NULL,
               configMAX_PRIORITIES - 1, NULL);
-  xTaskCreate(sensor_task, "Sensor Task", 1024, NULL, 2, NULL);
+  xTaskCreate(sensor_task, "Sensor Task", 2048, NULL, 2, NULL);
   xTaskCreate(mqtt_task, "MQTT Task", 1024, NULL, 1, NULL);
 
   vTaskStartScheduler();
