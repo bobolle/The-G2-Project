@@ -1,7 +1,7 @@
 # The G2 Project
 
 - DB: PostgreSQL DB
-- Protocol communication: TCP/IP
+- Protocol communication: MQTT, HTTP
 - Avg. calculations done on hub.
 - Log handling, store in database, PostgreSQL
 
