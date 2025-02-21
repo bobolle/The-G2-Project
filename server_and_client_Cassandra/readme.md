@@ -18,8 +18,8 @@ graph TD
     end
 
     E-->|POST /api/data|B
-    A-->|GET /api/devices|B
-    A-->|GET /api/devices/:deviceId/data|B
+    |GET /api/devices|B-->A
+    |GET /api/devices/:deviceId/data|B-->A
 
     B<-->|Database Operations|C
 ```
