@@ -2,7 +2,7 @@
 
 - DB: PostgreSQL DB
 - Protocol communication: MQTT, HTTP
-- Avg. calculations done on hub.
+- Aggregation: Avg. calculations done on hub.
 - Log handling, store in database, PostgreSQL
 
 ## High-Level Architechture Diagram
