@@ -21,7 +21,7 @@ flowchart LR
         A["Phone App"]
         C["Website"]
   end
- subgraph subGraph1[" "]
+ subgraph subGraph1["Edge"]
         F["Moisture Sensor"]
         E1{"Plant Device"}
         G["Temperature Sensor"]
@@ -47,7 +47,7 @@ flowchart LR
     A --> B
     C --> B
     B --> Z["Cloud and Databases"]
-    D{"IoT Hub"} <-- Gateway --> E1
+    D{"IoT Hub / Fog"} <-- Gateway --> E1
     E1 --> E3
     Z --> Y
     Z <--> D
