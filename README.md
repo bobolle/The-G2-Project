@@ -4,8 +4,13 @@
 - Protocol communication: MQTT, HTTP
 - Aggregation: Avg. calculations done on hub.
 - Log handling, store in database, PostgreSQL
+  
 - Edge: Raspberry Pi Pico W
 - Fog: Raspberry Pi 2
+
+- Fog saves last 30 days of data.
+- Only keeps logs with high deviation or errors.
+- Every 10 min, the avg. of last 10 mins of data will be sent to cloud.
   
 ## High-Level Architechture Diagram
 
