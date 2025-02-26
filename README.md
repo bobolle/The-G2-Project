@@ -4,7 +4,9 @@
 - Protocol communication: MQTT, HTTP
 - Aggregation: Avg. calculations done on hub.
 - Log handling, store in database, PostgreSQL
-
+- Edge: Raspberry Pi Pico W
+- Fog: Raspberry Pi 2
+  
 ## High-Level Architechture Diagram
 
 ```mermaid
